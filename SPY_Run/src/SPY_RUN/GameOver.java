@@ -26,8 +26,8 @@ public class GameOver extends JPanel{
 		catch (Exception e) { 
 			System.out.println("서버 연동 실패"+e.toString());
 		}
-		
-		
+
+
 		setLayout(null);
 
 		setBackground(new Color(0, 0, 0, 150)); // 반투명 배경
@@ -57,7 +57,6 @@ public class GameOver extends JPanel{
 		g_home.setBounds(487, 394, 35, 34);
 		g_retry.setBounds(578, 394, 35, 34);
 
-		System.out.println(go_score);
 
 		// 홈
 		g_home.addMouseListener(new MouseAdapter() {
@@ -69,7 +68,7 @@ public class GameOver extends JPanel{
 			public void mouseReleased(MouseEvent e) {
 				g_home.setSize(g_home.getWidth()+10, g_home.getHeight()+10);
 				g_home.repaint();
-				frame.restart(0);
+				frame.timerstop();
 				frame.showPage("StartPage");
 			}
 		});
@@ -103,7 +102,6 @@ public class GameOver extends JPanel{
 					pstmt.setInt(1, go_score);
 					pstmt.executeUpdate();
 					go_best_score = go_score;
-					System.out.println(go_best_score);
 				}
 			}
 		} catch (Exception e) {
@@ -111,5 +109,6 @@ public class GameOver extends JPanel{
 		}
 		end_score.setText(String.valueOf(go_score));
 		best_score.setText(String.valueOf(go_best_score));
+		
 	}
 }

@@ -13,6 +13,7 @@ public class Game_1 extends JPanel{
 	Font font = new Font("NanumGothic", Font.PLAIN, 20);
 
 	public Game_1(SpyRunFrame frame) {
+		
 		setLayout(null);
 
 		setBackground(new Color(0, 0, 0, 150)); // 반투명 배경
@@ -53,10 +54,17 @@ public class Game_1 extends JPanel{
 				g1_submit.repaint();
 				g1_answer = g1_input.getText();
 				if(g1_answer.equals("35")) {
-					g1_input.setVisible(false);
-					g1_submit.setVisible(false);
+					
+					remove(g1_input);
+					remove(g1_submit);
+					revalidate();
+					repaint();
 					g1_question.setVisible(false);
 					g1_complete.setVisible(true);
+					
+					revalidate(); 
+					repaint();
+					
 					Timer g1_timer = new Timer();
 					TimerTask g1_timertask = new TimerTask() {
 						@Override
@@ -65,11 +73,16 @@ public class Game_1 extends JPanel{
 							if(count == 1) {
 								g1_timer.cancel();
 								frame.restart(1);
-								g1_input.setText(""); 
-								g1_input.setVisible(true);
+								add(g1_input);
+								add(g1_submit);
+								revalidate();
+								repaint();
 								g1_submit.setVisible(true);
 								g1_question.setVisible(true);
 								g1_complete.setVisible(false);
+								
+								revalidate(); 
+								repaint();
 							}
 						}
 					};

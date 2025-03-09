@@ -16,7 +16,6 @@ public class StartPage extends JPanel {
       JLabel sL = new JLabel(start);
       JLabel qL = new JLabel(quit);
 
-      // 컴포넌트 추가
       add(sL);
       add(qL);
       add(backL);
@@ -30,7 +29,7 @@ public class StartPage extends JPanel {
          @Override
          public void mousePressed(MouseEvent e) {
             qL.setSize(qL.getWidth()-10, qL.getHeight()-10);
-            // 젹용 시키기 위해 reapaint
+            // 젹용 시키기 위해 reapaint하기
             qL.repaint();
          }
 
@@ -45,7 +44,7 @@ public class StartPage extends JPanel {
       moveButton(sL, "How_1", frame);
    }
 
-   // 버튼 메소드 (SpyRunFrame 하나를 다같이 공유. 이래야 페이지 이동이 가능)
+   // 버튼 메소드 
    public static void moveButton (JLabel j, String PN, SpyRunFrame frame) {
       j.addMouseListener(new MouseAdapter() {
          @Override

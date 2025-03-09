@@ -19,8 +19,7 @@ public class How_2 extends JPanel {
         h2_start.setBounds(500, 270, 100, 200);
         h2_back.setBounds(0, 0, 1100, 700);
         
-        
-        // next
+        // start
         h2_start.addMouseListener(new MouseAdapter() {
          @Override
          public void mousePressed(MouseEvent e) {
@@ -31,7 +30,13 @@ public class How_2 extends JPanel {
          public void mouseReleased(MouseEvent e) {
             h2_start.setSize(h2_start.getWidth()+10, h2_start.getHeight()+10);
             h2_start.repaint();
-            frame.showPage("Game");
+            if(frame.g_C.timercheck()) {
+            	frame.showPage("Game");
+            	frame.repaint();
+            }
+            else {
+            	frame.restart(0);
+            }
          }
       });
     }

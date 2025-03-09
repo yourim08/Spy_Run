@@ -57,6 +57,10 @@ public class Game_3 extends JPanel{
 					g3_submit.setVisible(false);
 					g3_question.setVisible(false);
 					g3_complete.setVisible(true);
+					
+					revalidate(); 
+					repaint();
+					
 					Timer g3_timer = new Timer();
 					TimerTask g3_timertask = new TimerTask() {
 						@Override
@@ -70,6 +74,10 @@ public class Game_3 extends JPanel{
 								g3_submit.setVisible(true);
 								g3_question.setVisible(true);
 								g3_complete.setVisible(false);
+								
+								revalidate(); 
+								repaint();
+								
 							}
 						}
 					};

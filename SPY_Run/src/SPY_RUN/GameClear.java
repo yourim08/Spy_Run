@@ -29,7 +29,7 @@ public class GameClear extends JPanel{
 
 		setLayout(null);
 
-		setBackground(new Color(0, 0, 0, 150)); // 반투명 배경
+		setBackground(new Color(0, 0, 0, 150)); 
 		ImageIcon back = new ImageIcon("img/gc_back.png");
 		ImageIcon quit = new ImageIcon("img/gc_quit.png");
 		ImageIcon retry = new ImageIcon("img/gc_retry.png");

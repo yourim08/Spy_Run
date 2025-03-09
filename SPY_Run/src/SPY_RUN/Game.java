@@ -15,7 +15,7 @@ public class Game extends JPanel {
 	int score = 0;
 	int x1 = 0;
 	int x2 = 2200;
-	int x_icon = 1; // 25 
+	int x_icon = 25; 
 	int x_cone1 = r.nextInt(400)+1100;
 	int x_cone2 = r.nextInt(400)+1932;
 	int x_cone3 = r.nextInt(400)+2832;
@@ -31,7 +31,8 @@ public class Game extends JPanel {
 	boolean flag_1 = false;
 	boolean flag_2 = false;
 	boolean flag_3 = false;
-
+	boolean timer_on_off = false;
+	
 	JLabel g_spy;
 	JLabel g_jump;
 	JLabel g_sliding;
@@ -50,7 +51,6 @@ public class Game extends JPanel {
 
 	Timer timer;
 	Timer gauge_timer;
-	Timer spike_long_timer;
 
 	SpyRunFrame frame;
 
@@ -125,15 +125,8 @@ public class Game extends JPanel {
 		requestFocusInWindow(); 
 		// 움직이는 배경과 랜덤 장애물, 히트 판정 타이머 
 		TimerStart();
-
-
-		// 엔딩 창
-	} // 생성자 끝   
-	//	@Override
-	//	public void paintComponent(Graphics g) {
-	//		super.paintComponent(g);
-	//		// 포커스를 받을 때 그리기를 업데이트
-	//	}
+		timer_on_off = true;
+	}   
 
 	public void TimerStart() {
 
@@ -204,17 +197,21 @@ public class Game extends JPanel {
 				if ((x_cone1 <= 290 && x_cone1 >= 210) || (x_cone2 <= 290 && x_cone2 >= 210) || (x_cone3 <= 290 && x_cone3 >= 210)) {
 					if(status != 1){
 						timer.cancel();
+						timer_on_off = false;
 						g_spy.setVisible(false);
 						gauge_timer.cancel();
 						frame.showPage("GameOver");
+						
 					}
 				}
 				if ((x_spike1 <= 290 && x_spike1 >= 210) || (x_spike2 <= 290 && x_spike2 >= 210)) {
 					if(status != 2){
 						timer.cancel();
+						timer_on_off = false;
 						g_spy.setVisible(false);
 						gauge_timer.cancel();
 						frame.showPage("GameOver");
+						
 					}
 				}
 				if(x_icon>488) {
@@ -222,9 +219,11 @@ public class Game extends JPanel {
 					if((x_spike_long <= 300 && x_spike_long >= 100)) {
 						if(status != 2){
 							timer.cancel();
+							timer_on_off = false;
 							gauge_timer.cancel();
 							g_spy.setVisible(false);
 							frame.showPage("GameOver");
+							
 						}
 					}
 				}
@@ -240,24 +239,30 @@ public class Game extends JPanel {
 				if (x_icon == 250) {
 					timer.cancel();
 					gauge_timer.cancel();
+					timer_on_off = false;
 					g_spy.setVisible(false);
 					frame.showPage("Game_1");
+					revalidate(); 
+					repaint();
 				}
 				if (x_icon == 488) {
 					timer.cancel();
 					gauge_timer.cancel();
+					timer_on_off = false;
 					g_spy.setVisible(false);
 					frame.showPage("Game_2");
 				}
 				if (x_icon == 728) {
 					timer.cancel();
 					gauge_timer.cancel();
+					timer_on_off = false;
 					g_spy.setVisible(false);
 					frame.showPage("Game_3");
 				}
 				if (x_icon == 946) {
 					timer.cancel();
 					gauge_timer.cancel();
+					timer_on_off = false;
 					g_spy.setVisible(false);
 					frame.showPage("GameClear");
 				}
@@ -274,13 +279,13 @@ public class Game extends JPanel {
 	// 4. 점프와 슬라이딩
 
 	public void jump() {
-		jumpTime = System.currentTimeMillis(); // 점프 시작 시간 
+		jumpTime = System.currentTimeMillis(); 
 		if(sliding) {
 			Timer j_time = new Timer();
 			TimerTask j_task = new TimerTask() {
 				@Override
 				public void run() {
-					long j_Time = System.currentTimeMillis() - jumpTime; // 경과시간
+					long j_Time = System.currentTimeMillis() - jumpTime; 
 
 					jump = false;
 					if(j_Time < 1400 ) {
@@ -303,13 +308,13 @@ public class Game extends JPanel {
 	}
 
 	public void jumpFast() {
-		jumpTime = System.currentTimeMillis(); // 점프 시작 시간 
+		jumpTime = System.currentTimeMillis(); 
 		if(sliding) {
 			Timer j_time = new Timer();
 			TimerTask j_task = new TimerTask() {
 				@Override
 				public void run() {
-					long j_Time = System.currentTimeMillis() - jumpTime; // 경과시간
+					long j_Time = System.currentTimeMillis() - jumpTime; 
 
 					jump = false;
 					if(j_Time < 800 ) {
@@ -351,7 +356,12 @@ public class Game extends JPanel {
 	}
 
 	public void reset(int level) {
-		if(level == 1) {
+		if(level == 0){
+			x_icon = 24;
+			speed = 1;
+			score = 0;
+		}
+		else if(level == 1) {
 			speed = 2;
 			x_icon = 252;
 		}
@@ -363,11 +373,7 @@ public class Game extends JPanel {
 			x_icon = 730;
 			speed = 2;
 		}
-		else {
-			x_icon = 24;
-			speed = 1;
-			score = 0;
-		}
+
 		if (x_icon>946) {
 			score = 0;
 		}
@@ -386,9 +392,10 @@ public class Game extends JPanel {
 		flag_1 = false;
 		flag_2 = false;
 		flag_3 = false;
-
+		
 		g_jump.setVisible(false);
 		g_sliding.setVisible(false);
+		g_spike_long.setVisible(false);
 
 		g_cone1.setBounds(x_cone1, 445, 100, 100);
 		g_cone2.setBounds(x_cone2, 445, 100, 100);
@@ -398,6 +405,7 @@ public class Game extends JPanel {
 
 		// 새 타이머 시작
 		TimerStart();
+		timer_on_off = true;
 		g_spy.setVisible(true);
 	}
 
@@ -423,5 +431,14 @@ public class Game extends JPanel {
 	
 	public int sendScore() {
 		return score;
+	}
+
+	public void TimerStop() {
+		timer.cancel();
+		gauge_timer.cancel();
+	}
+
+	public boolean timercheck() {
+		return timer_on_off;
 	}
 }

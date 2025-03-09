@@ -57,6 +57,10 @@ public class Game_2 extends JPanel{
 					g2_submit.setVisible(false);
 					g2_question.setVisible(false);
 					g2_complete.setVisible(true);
+					
+					revalidate(); 
+					repaint();
+					
 					Timer g2_timer = new Timer();
 					TimerTask g2_timertask = new TimerTask() {
 						@Override
@@ -65,11 +69,15 @@ public class Game_2 extends JPanel{
 							if(count == 1) {
 								g2_timer.cancel();
 								frame.restart(2);
+								frame.repaint();
 								g2_input.setText(""); 
 								g2_input.setVisible(true);
 								g2_submit.setVisible(true);
 								g2_question.setVisible(true);
 								g2_complete.setVisible(false);
+								
+								revalidate(); 
+								repaint();
 							}
 						}
 					};
@@ -78,6 +86,7 @@ public class Game_2 extends JPanel{
 				}
 				else {
 					frame.showPage("GameOver");
+					frame.repaint();
 				}
 			}
 		});

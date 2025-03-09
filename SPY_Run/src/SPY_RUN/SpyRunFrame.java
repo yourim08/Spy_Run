@@ -2,6 +2,11 @@ package SPY_RUN;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.Statement;
+
 import javax.swing.*;
 
 public class SpyRunFrame extends JFrame {
@@ -9,7 +14,32 @@ public class SpyRunFrame extends JFrame {
 	JPanel mainPanel;
 	Game g_C;
 	GameOver go_C;
+	
+	Connection con = null;
+	Statement st = null;
+	String url = "jdbc:mysql://localhost/spyrundb?serverTimezone=Asia/Seoul";
+	String user = "root";
+	String password = "qwer1357!";
+	
 	public SpyRunFrame() {
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			con = DriverManager.getConnection(url, user, password);
+			st = con.createStatement();
+		}
+		catch (Exception e) { 
+			System.out.println("서버 연동 실패"+e.toString());
+		}
+		
+		try {
+			String updateQuery = "UPDATE spy_run SET score = ? where id = 1"; 
+			PreparedStatement pstmt = con.prepareStatement(updateQuery);
+			pstmt.setInt(1, 0);
+			pstmt.executeUpdate();
+		}
+		catch (Exception e1) {
+			System.out.println("점수 가져오기 실패: " + e1.toString());
+		}
 		setFocusable(true);
 		setTitle("Spy_Run");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -20,7 +50,7 @@ public class SpyRunFrame extends JFrame {
 		card = new CardLayout();
 		mainPanel = new JPanel(card);
 
-		// 패널 추가,,, 클래스 연결?? Wow...
+		// 패널 추가
 		StartPage s_C = new StartPage(this);
 		How_1 h1_C = new How_1(this);
 		How_2 h2_C = new How_2(this);
@@ -87,7 +117,6 @@ public class SpyRunFrame extends JFrame {
 		if(name.equals("GameOver")) {
 			go_C.getScore(g_C.sendScore());
 		}
-		// 카드야 보여줘 메인에 다른 페이지를. 그 페이지 이름(=클래스 이름)은 걔가 줄거야~
 		card.show(mainPanel, name);
 	}
 
@@ -95,11 +124,15 @@ public class SpyRunFrame extends JFrame {
 		new SpyRunFrame();
 	}
 	public void restart(int level) {
-		// 패널 갱신
 		g_C.reset(level);
 		mainPanel.revalidate();
 		mainPanel.repaint();
 		showPage("Game");
+	}
+
+
+	public void timerstop() {
+		g_C.TimerStop();
 	}
 }
 
