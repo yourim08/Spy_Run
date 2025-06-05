@@ -17,9 +17,9 @@ public class SpyRunFrame extends JFrame {
 	
 	Connection con = null;
 	Statement st = null;
-	String url = "jdbc:mysql://localhost/spyrundb?serverTimezone=Asia/Seoul";
+	String url = "#";
 	String user = "root";
-	String password = "qwer1357!";
+	String password = "#";
 	
 	public SpyRunFrame() {
 		try {
